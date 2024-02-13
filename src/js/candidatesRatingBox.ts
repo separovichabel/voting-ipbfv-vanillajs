@@ -1,6 +1,5 @@
 class CandidatesRatingBox extends HTMLElement {
     private shadow: ShadowRoot;
-    logHistoryBox: HTMLElement;
     constructor() {
         super();
 
@@ -9,20 +8,17 @@ class CandidatesRatingBox extends HTMLElement {
         box.innerHTML = `
             <h1>Votações</h1>
         `;
+        const candidateBoxList = document.createElement('candidate-box-list');
         const addCandidateBox = document.createElement('add-candidate-box');
-        addCandidateBox.addEventListener('candidateAdded', (event: Event)=> {
-            const candidate = (event as CustomEvent).detail.name;
-            this.addCandidate(candidate);
-        })
+        const logHistoryBox = document.createElement('log-history-box');
 
-        this.logHistoryBox = document.createElement('log-history-box');
 
-        box.appendChild(addCandidateBox);
         box.appendChild(this.setupStyles());
-        box.appendChild(this.logHistoryBox);
+        box.appendChild(addCandidateBox);
+        box.appendChild(logHistoryBox);
+        box.appendChild(candidateBoxList);
 
         this.shadow = this.attachShadow({ mode: 'open' });
-        // shadow.innerHTML = `Inside the shadow DOM`;
         this.shadow.appendChild(box);
     }
 
@@ -39,35 +35,6 @@ class CandidatesRatingBox extends HTMLElement {
         `;
         return style;
     }
-
-    addCandidate(candidate: string) {
-        const candidateBox = document.createElement('candidate-box');
-        candidateBox.setAttribute('name', candidate);
-        this.shadow.appendChild(candidateBox);
-        candidateBox.addEventListener('voteAdded', (event: Event) => {
-            const candidate = (event as CustomEvent).detail.candidateName;
-            this.addLog(`Voto adicionado para ${candidate}`);
-        })
-        candidateBox.addEventListener('voteRemoved', (event: Event) => {
-            const candidate = (event as CustomEvent).detail.candidateName;
-            this.addLog(`Voto removido para ${candidate}`);
-        })
-        this.logHistoryBox.dispatchEvent(new CustomEvent('logAdded', {
-            detail: {
-                log: `Candidato adicionado: ${candidate}`
-            }
-        }));
-    }
-
-    addLog(log: string){
-        const logEvent = new CustomEvent('logAdded', {
-            detail: {
-                log
-            }
-        });
-        this.logHistoryBox.dispatchEvent(logEvent);
-    }
-
 }
 
 customElements.define('candidates-rating-box', CandidatesRatingBox)

@@ -14,7 +14,7 @@ class LogHistoryBox extends HTMLElement{
         const shadow = this.attachShadow({ mode: 'open' });
         shadow.appendChild(box);
 
-        this.addEventListener('logAdded', (event: Event) => {
+        document.addEventListener('logAdded', (event: Event) => {
             const log = (event as CustomEvent).detail.log;
             this.addLog(log);
         })

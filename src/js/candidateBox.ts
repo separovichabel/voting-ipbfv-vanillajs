@@ -46,8 +46,8 @@ class CandidateBox extends HTMLElement {
     }
 
     addVote() {
-        this.dispatchEvent(new CandidateVoteEvent("voteAdded", this.candidateName))
         this.votes++;
+        document.dispatchEvent(new CustomEvent("logAdded", {detail: { log: `+vote - total ${this.votes} -  ${this.candidateName}`}}))
         this.votesElement.textContent = this.votes.toString();
     }
 
@@ -55,8 +55,8 @@ class CandidateBox extends HTMLElement {
         if (this.votes === 0) {
             return;
         }
-        this.dispatchEvent(new CandidateVoteEvent('voteRemoved', this.candidateName))
         this.votes--;
+        document.dispatchEvent(new CustomEvent('logAdded', {detail: { log: `-vote - total ${this.votes} -  ${this.candidateName}`}}))
         this.votesElement.textContent = this.votes.toString();
     }
 
@@ -70,21 +70,6 @@ class CandidateBox extends HTMLElement {
             this.candidateNameElement.textContent = newValue;
         }
     }
-}
-
-class CandidateVoteEvent extends CustomEvent<EventData>{
-    constructor(kind: string, candidateName: string){
-        super(kind, {
-            cancelable: false,
-            detail: {
-                candidateName
-            }
-        })
-    }
-}
-
-type EventData = {
-    candidateName: string;
 }
 
 customElements.define('candidate-box', CandidateBox);

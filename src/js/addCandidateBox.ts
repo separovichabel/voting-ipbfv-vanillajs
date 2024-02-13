@@ -35,12 +35,13 @@ class AddCandidateBox extends HTMLElement{
             candidateName = 'Candidato sem nome ' + this.count;
             this.count++;
         }
-        this.dispatchEvent(new CustomEvent('candidateAdded', {
+            document.dispatchEvent(new CustomEvent('candidateAdded', {
             cancelable: false,
             detail: {
                 name: candidateName
             }
         }))
+        this.log(candidateName)
     }
 
     createInput(): HTMLInputElement{
@@ -53,6 +54,15 @@ class AddCandidateBox extends HTMLElement{
         const button = document.createElement('button');
         button.textContent = 'Adicionar';
         return button;
+    }
+
+    log(str: string) {
+        document.dispatchEvent(new CustomEvent('logAdded', {
+            cancelable: false,
+            detail: {
+                log: `candidateAdded: ${str}`
+            }
+        }))
     }
 }
 
