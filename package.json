@@ -1,0 +1,12 @@
+{
+  "name": "voting-ipbfv-vanillajs",
+  "version": "1.0.0",
+  "description": "Votting site for IPB",
+  "main": "index.js",
+  "scripts": {
+    "build": "cp src/index.html dist/index.html && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abel Separovich",
+  "license": "ISC"
+}
