@@ -5,6 +5,7 @@ class AddCandidateBox extends HTMLElement{
     constructor(){
         super();
         const box = document.createElement('div');
+        box.className = 'add-candidate-box';
         const input = this.createInput()
         const button = this.createButton();
         
@@ -12,9 +13,22 @@ class AddCandidateBox extends HTMLElement{
 
         box.appendChild(input);
         box.appendChild(button);
+        box.appendChild(this.setupStyles());
         
         const shadow = this.attachShadow({ mode: 'open' });
         shadow.appendChild(box);
+    }
+
+    setupStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .add-candidate-box {
+                border: 1px solid #000;
+                padding: 10px;
+                margin: 10px;
+            }
+        `;
+        return style;
     }
 
     AddCandidate(candidateName: string) {console.log("Evento trigado!")

@@ -20,9 +20,22 @@ class CandidateBox extends HTMLElement {
         box.appendChild(addVoteButton);
         box.appendChild(removeVoteButton);
         box.appendChild(this.votesElement);
+        box.appendChild(this.setupStyles());
 
         const shadow = this.attachShadow({ mode: 'open' });
         shadow.appendChild(box);
+    }
+
+    setupStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .candidate {
+                border: 1px solid #000;
+                padding: 10px;
+                margin: 10px;
+            }
+        `;
+        return style;
     }
 
     createButton(content: string, callback: () => void ): HTMLButtonElement {
