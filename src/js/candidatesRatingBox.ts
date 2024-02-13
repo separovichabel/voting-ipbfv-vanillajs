@@ -1,5 +1,6 @@
 class CandidatesRatingBox extends HTMLElement {
     private shadow: ShadowRoot;
+    logHistoryBox: HTMLElement;
     constructor() {
         super();
 
@@ -15,8 +16,11 @@ class CandidatesRatingBox extends HTMLElement {
             this.addCandidate(candidate);
         })
 
+        this.logHistoryBox = document.createElement('log-history-box');
+
         box.appendChild(addCandidateBox);
         box.appendChild(this.setupStyles());
+        box.appendChild(this.logHistoryBox);
 
         this.shadow = this.attachShadow({ mode: 'open' });
         // shadow.innerHTML = `Inside the shadow DOM`;
@@ -39,7 +43,30 @@ class CandidatesRatingBox extends HTMLElement {
         const candidateBox = document.createElement('candidate-box');
         candidateBox.setAttribute('name', candidate);
         this.shadow.appendChild(candidateBox);
+        candidateBox.addEventListener('voteAdded', (event: Event) => {
+            const candidate = (event as CustomEvent).detail.candidateName;
+            this.addLog(`Voto adicionado para ${candidate}`);
+        })
+        candidateBox.addEventListener('voteRemoved', (event: Event) => {
+            const candidate = (event as CustomEvent).detail.candidateName;
+            this.addLog(`Voto removido para ${candidate}`);
+        })
+        this.logHistoryBox.dispatchEvent(new CustomEvent('logAdded', {
+            detail: {
+                log: `Candidato adicionado: ${candidate}`
+            }
+        }));
     }
+
+    addLog(log: string){
+        const logEvent = new CustomEvent('logAdded', {
+            detail: {
+                log
+            }
+        });
+        this.logHistoryBox.dispatchEvent(logEvent);
+    }
+
 }
 
 customElements.define('candidates-rating-box', CandidatesRatingBox)
