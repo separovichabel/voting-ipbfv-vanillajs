@@ -30,7 +30,7 @@ class AddCandidateBox extends HTMLElement{
         return style;
     }
 
-    AddCandidate(candidateName: string) {console.log("Evento trigado!")
+    AddCandidate(candidateName: string) {
         if (candidateName === '') {
             candidateName = 'Candidato sem nome ' + this.count;
             this.count++;

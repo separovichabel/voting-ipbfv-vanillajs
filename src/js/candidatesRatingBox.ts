@@ -11,7 +11,6 @@ class CandidatesRatingBox extends HTMLElement {
         `;
         const addCandidateBox = document.createElement('add-candidate-box');
         addCandidateBox.addEventListener('candidateAdded', (event: Event)=> {
-            console.log("evento recebido", event)
             const candidate = (event as CustomEvent).detail.name;
             this.addCandidate(candidate);
         })
@@ -34,6 +33,8 @@ class CandidatesRatingBox extends HTMLElement {
                 border: 1px solid #000;
                 padding: 10px;
                 margin: 10px;
+
+                display: flex;
             }
         `;
         return style;
