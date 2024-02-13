@@ -1,4 +1,6 @@
 class AddCandidateBox extends HTMLElement{
+
+    count: number = 1;
     
     constructor(){
         super();
@@ -16,6 +18,10 @@ class AddCandidateBox extends HTMLElement{
     }
 
     AddCandidate(candidateName: string) {console.log("Evento trigado!")
+        if (candidateName === '') {
+            candidateName = 'Candidato sem nome ' + this.count;
+            this.count++;
+        }
         this.dispatchEvent(new CustomEvent('candidateAdded', {
             cancelable: false,
             detail: {
