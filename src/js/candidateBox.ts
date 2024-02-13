@@ -1,5 +1,5 @@
 class CandidateBox extends HTMLElement {
-    votes: number = 1;
+    votes: number = 0;
     votesElement: HTMLParagraphElement = document.createElement('p');
     
     candidateName: string = this.getAttribute('name') || '';
@@ -14,7 +14,7 @@ class CandidateBox extends HTMLElement {
         const addVoteButton = this.createButton('+', this.addVote.bind(this));
         const removeVoteButton = this.createButton('-', this.removeVote.bind(this));
 
-        this.votesElement.textContent = "1";
+        this.votesElement.textContent = this.votes.toString();
 
         box.appendChild(this.candidateNameElement);
         box.appendChild(addVoteButton);

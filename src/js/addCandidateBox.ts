@@ -1,5 +1,4 @@
 class AddCandidateBox extends HTMLElement{
-
     count: number = 1;
     
     constructor(){
