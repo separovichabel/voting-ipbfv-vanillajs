@@ -22,9 +22,17 @@ class AddCandidateBox extends HTMLElement{
         const style = document.createElement('style');
         style.textContent = `
             .add-candidate-box {
-                border: 1px solid #000;
-                padding: 10px;
-                margin: 10px;
+            }
+
+            .add-candidate-input {
+                background-color: rgba(255, 255, 255, 0.6);
+                border: 0px;
+            }
+
+            .add-candidate-button {
+                background-color: #00ff5294;
+                border: 0;
+                padding: 0;
             }
         `;
         return style;
@@ -46,12 +54,14 @@ class AddCandidateBox extends HTMLElement{
 
     createInput(): HTMLInputElement{
         const input = document.createElement('input');
+        input.className = 'add-candidate-input';
         input.placeholder = 'Nome do candidato';
         return input;
     }
 
     createButton(): HTMLButtonElement{
         const button = document.createElement('button');
+        button.className = 'add-candidate-button';
         button.textContent = 'Adicionar';
         return button;
     }

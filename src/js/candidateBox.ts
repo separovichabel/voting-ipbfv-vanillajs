@@ -11,15 +11,15 @@ class CandidateBox extends HTMLElement {
         box.className = 'candidate';
         this.candidateNameElement.textContent = this.candidateName;
 
-        const addVoteButton = this.createButton('+', this.addVote.bind(this));
-        const removeVoteButton = this.createButton('-', this.removeVote.bind(this));
+        const addVoteButton = this.createAddButton(this.addVote.bind(this));
+        const removeVoteButton = this.createRemoveButton(this.removeVote.bind(this));
 
         this.votesElement.textContent = this.votes.toString();
 
         box.appendChild(this.candidateNameElement);
+        box.appendChild(this.votesElement);
         box.appendChild(addVoteButton);
         box.appendChild(removeVoteButton);
-        box.appendChild(this.votesElement);
         box.appendChild(this.setupStyles());
 
         const shadow = this.attachShadow({ mode: 'open' });
@@ -30,24 +30,53 @@ class CandidateBox extends HTMLElement {
         const style = document.createElement('style');
         style.textContent = `
             .candidate {
-                border: 1px solid #000;
                 padding: 10px;
-                margin: 10px;
+                display: grid;
+                grid-template-columns: 60% 30% 5% 5%;
+                background-color: #2e7c39;
+                margin-top: 10px;
+            }
+
+            .add-button {
+                background-color: #00ff5294;
+                border: 0;
+                padding: 0;
+            }
+
+            .remove-button {
+                background-color: #ff000094;
+                border: 0;
+                padding: 0;
             }
         `;
         return style;
     }
 
-    createButton(content: string, callback: () => void ): HTMLButtonElement {
+    createAddButton(callback: () => void ): HTMLButtonElement {
         const button = document.createElement('button');
-        button.textContent = content;
+        button.className = 'add-button';
+        button.textContent = '+';
+        button.onclick = callback;
+        return button;
+    }
+
+
+    createRemoveButton(callback: () => void ): HTMLButtonElement {
+        const button = document.createElement('button');
+        button.className = 'remove-button';
+        button.textContent = '-';
         button.onclick = callback;
         return button;
     }
 
     addVote() {
         this.votes++;
-        document.dispatchEvent(new CustomEvent("logAdded", {detail: { log: `+vote - total ${this.votes} -  ${this.candidateName}`}}))
+        document.dispatchEvent(new CustomEvent("logAdded", {
+            detail: { 
+                log: `+vote - total ${this.votes} -  ${this.candidateName}`,
+                eventType: 'voteAdded'
+            }
+        }))
         this.votesElement.textContent = this.votes.toString();
     }
 
@@ -56,7 +85,12 @@ class CandidateBox extends HTMLElement {
             return;
         }
         this.votes--;
-        document.dispatchEvent(new CustomEvent('logAdded', {detail: { log: `-vote - total ${this.votes} -  ${this.candidateName}`}}))
+        document.dispatchEvent(new CustomEvent('logAdded', {
+            detail: { 
+                log: `-vote - total ${this.votes} -  ${this.candidateName}`,
+                eventType: 'voteRemoved'
+            }
+        }))
         this.votesElement.textContent = this.votes.toString();
     }
 
