@@ -4,7 +4,7 @@
   "description": "Votting site for IPB",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist/* && cp src/index.html dist/index.html && tsc",
+    "build": "rm -rf dist/* && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Abel Separovich",
