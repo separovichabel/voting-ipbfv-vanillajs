@@ -22,6 +22,9 @@ class AddCandidateBox extends HTMLElement{
         const style = document.createElement('style');
         style.textContent = `
             .add-candidate-box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
 
             .add-candidate-input {
@@ -30,9 +33,10 @@ class AddCandidateBox extends HTMLElement{
             }
 
             .add-candidate-button {
-                background-color: #00ff5294;
+                background-color: #a0d8a7;
                 border: 0;
                 padding: 0;
+                margin: 10px;
             }
         `;
         return style;

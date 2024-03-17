@@ -1,9 +1,9 @@
 class CandidateBox extends HTMLElement {
     votes: number = 0;
-    votesElement: HTMLParagraphElement = document.createElement('p');
+    votesElement: HTMLParagraphElement = document.createElement('h1');
     
     candidateName: string = this.getAttribute('name') || '';
-    candidateNameElement: HTMLParagraphElement = document.createElement('p');
+    candidateNameElement: HTMLParagraphElement = document.createElement('h1');
 
     constructor() {
         super();
@@ -17,8 +17,8 @@ class CandidateBox extends HTMLElement {
         this.votesElement.textContent = this.votes.toString();
 
         box.appendChild(this.candidateNameElement);
-        box.appendChild(this.votesElement);
         box.appendChild(addVoteButton);
+        box.appendChild(this.votesElement);
         box.appendChild(removeVoteButton);
         box.appendChild(this.setupStyles());
 
@@ -32,21 +32,36 @@ class CandidateBox extends HTMLElement {
             .candidate {
                 padding: 10px;
                 display: grid;
-                grid-template-columns: 60% 30% 5% 5%;
-                background-color: #2e7c39;
-                margin-top: 10px;
+                grid-template-columns: 60% 40%;
+                background-color: #a0d8a7;
+                height: 100px;
+                border-radius: 10px;
             }
 
             .add-button {
-                background-color: #00ff5294;
+                background-color: #44ad6694;
+                height: 100%;
+                width: 100%;
                 border: 0;
                 padding: 0;
+                font-size: 2em;
+                border-radius: 10px 10px 0 0;
             }
 
             .remove-button {
                 background-color: #ff000094;
                 border: 0;
                 padding: 0;
+                font-size: 2em;
+                border-radius: 0 0 10px 10px;
+            }
+
+            h1 {
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                align-self: center;
+                font-size: 2em;
             }
         `;
         return style;
